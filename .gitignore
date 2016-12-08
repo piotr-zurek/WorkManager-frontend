@@ -1,0 +1,10 @@
+node_modules
+.tmp
+.sass-cache
+bower_components
+.idea/
+test/
+/app/styles/
+/app/images/
+/dist
+/app/fonts/

@@ -1,0 +1,30 @@
+<div class="content">
+  <div class="row">
+    <div class="col-md-3 col-sm-3">
+      <div class="user-profile-pic">
+        <img width="69" height="69" ng-src="{{url}}/assets/avatars/original/{{meta.avatar}}" alt="">
+      </div>
+      <div class="user-mini-description">
+        <h3 class="text-success semi-bold">
+          2548
+        </h3>
+        <h5>Followers</h5>
+        <h3 class="text-success semi-bold">
+          457
+        </h3>
+        <h5>Following</h5>
+      </div>
+    </div>
+    <div class="col-md-5 user-description-box tiles white col-sm-8">
+      <div class="controller"><a href="javascript:;" class="config"></a></div>
+      <h4 class="semi-bold no-margin">{{meta.name}} {{meta.lastname}}</h4>
+      <h6 class="no-margin">{{meta.position}}</h6>
+      <br>
+      <p><i class="fa fa-briefcase"></i>{{meta.company}}</p>
+      <p><i class="fa fa-globe"></i>{{meta.www}}</p>
+      <p><i class="fa fa-envelope"></i>{{meta.mail}}</p>
+      <p><i class="fa fa-phone"></i>{{meta.phone}}</p>
+      <p><i>{{meta.description}}</i></p>
+    </div>
+  </div>
+</div>

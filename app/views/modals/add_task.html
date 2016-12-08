@@ -1,0 +1,93 @@
+<div class="modal-header">
+  <button type="button" class="close" ng-click="cancel()" aria-hidden="true">×</button>
+  <br>
+  <i class="fa fa-file-pdf-o fa-7x"></i>
+  <h4 id="myModalLabel" class="semi-bold">{{'Create Task' | translate}}: {{task.name}}</h4>
+  <p class="no-margin">You'll be charged $29/Month and get immediate access to new plan </p>
+  <br>
+</div>
+<div class="modal-body clearfix">
+  <form role="form" novalidate="" ng-submit="save()">
+
+    <div class="form-group">
+      <label for="Name" class="control-label" translate>Name</label>
+
+      <div class="control">
+        <input type="text" class="form-control" id="Name" placeholder="Name" ng-model="task.name" required>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="project" class="control-label" translate>Project</label>
+
+      <div class="control">
+        <select name="name" class="form-control" id="project"
+                ng-options="project as project.name for project in projects track by project.id"
+                ng-model="temp.project" ng-change="changeProject()"></select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="observer" class="control-label" translate>Observer</label>
+
+      <div class="control">
+        <select name="name" class="form-control" id="observer"
+                ng-options="user as user.name for user in users.data track by user.id"
+                ng-model="temp.observer" ng-change="changeObserver()">
+          <option value="" translate>-NONE-</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="assigned" class="control-label" translate>Assigned to</label>
+
+      <div class="control">
+        <select name="name" class="form-control" id="assigned"
+                ng-options="assigned as assigned.name for assigned in users.data track by assigned.id"
+                ng-model="temp.assigned_to" ng-change="changeAssigned()">
+          <option value="" translate>-NONE-</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="priority" class="control-label" translate>Priority</label>
+
+      <div class="control">
+        <select name="name" class="form-control" id="priority"
+                ng-options="priority.id as priority.name for priority in priorities track by priority.id"
+                ng-model="task.priority">
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="state" class="control-label" translate>State</label>
+
+      <div class="control">
+        <select name="name" class="form-control" id="state"
+                ng-options="state.id as state.name for state in states track by state.id"
+                ng-model="task.state">
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="type" class="control-label" translate>Type</label>
+
+      <div class="control">
+        <select name="name" class="form-control" id="type"
+                ng-options="type.id as type.name for type in types track by type.id"
+                ng-model="task.type">
+        </select>
+      </div>
+    </div>
+
+
+  </form>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-default" ng-click="cancel()" translate>Cancel</button>
+  <button class="btn btn-primary" ng-click="save()" translate>Save</button>
+</div>

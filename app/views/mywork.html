@@ -1,0 +1,48 @@
+<!-- BEGIN MODEL-->
+<div id="portlet-config" class="modal hide">
+  <div class="modal-header">
+    <button data-dismiss="modal" class="close" type="button"></button>
+    <h3>Widget Settings</h3>
+  </div>
+  <div class="modal-body"> Widget settings form goes here</div>
+</div>
+<!-- END MODEL-->
+<div class="clearfix"></div>
+<div class="content">
+  <div class="row">
+    <div class="col-md-10 col-vlg-7">
+      <ul class="cbp_tmtimeline">
+        <li ng-repeat="screenshot in screenshots">
+          <time class="cbp_tmtime" datetime="{{screenshot.date | date : 'yyyy-MM-dd hh:mm'}}">
+            <span class="date">{{screenshot.date | date : 'shortDate'}}</span>
+            <span class="time">{{screenshot.date | date : 'shortTime'}}</span></span>
+          </time>
+          <div class="cbp_tmicon animated bounceIn">
+            <div class="user-profile"><img ng-src="{{url}}/assets/avatars/original/{{screenshot.user.metadata.avatar}}"
+                                           width="35" height="35" alt=""></div>
+          </div>
+          <div class="cbp_tmlabel">
+            <div class="p-t-10 p-l-30 p-r-20 p-b-20 xs-p-r-10 xs-p-l-10 xs-p-t-5">
+              <h4 class="inline m-b-5"><span class="text-success semi-bold">{{screenshot.user.metadata.name}} {{screenshot.user.metadata.lastname}}</span>
+              </h4>
+              <h5 class="inline muted semi-bold m-b-5">near florida</h5>
+
+              <div class="muted">Shared publicly - 8:45pm</div>
+            </div>
+            <img ng-src="{{url}}/sss/{{screenshot.filename}}" alt="">
+            <div class="clearfix"></div>
+            <div class="tiles grey p-t-10 p-b-10 p-l-20">
+              <ul class="action-links">
+                <li>Like</li>
+                <li>Comment</li>
+              </ul>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- END PAGE -->
+</div>
+ 

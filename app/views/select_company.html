@@ -1,0 +1,19 @@
+<div class="p-t-30 p-l-40 p-b-20 xs-p-t-10 xs-p-l-10 xs-p-b-10 ng-scope">
+  <h2 class="normal">Select company</h2>
+  <p>Use Facebook, Twitter or your email to sign in.<br></p>
+  <p class="p-b-20">Sign up Now! for WorkManager accounts, it's free and always will be..</p>
+</div>
+<div class="tiles grey p-t-20 p-b-20 text-black ng-scope">
+  <form novalidate name="companySelectForm">
+    <div class="form-group">
+      <label for="company" class="col-sm-2 control-label">Company</label>
+      <div class="col-sm-10">
+        <select name="company" class="form-control" id="company" ng-model="companyModel"
+                ng-options="company as company.name for company in companies track by company.id" required></select>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary" ng-click="selectCompany()" ng-disabled="companySelectForm.$invalid">
+      Submit
+    </button>
+  </form>
+</div>

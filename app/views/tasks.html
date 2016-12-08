@@ -1,0 +1,185 @@
+<div class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="grid simple">
+        <div class="grid-title no-border">
+          <h4>Filter <span class="semi-bold">Projects</span></h4>
+          <div class="tools">
+            <a href="javascript:;" class="collapse" ng-click="collapseFilters=!collapseFilters"
+               ng-init="collapseFilters=true"></a>
+          </div>
+        </div>
+        <div class="grid-body no-border" uib-collapse="collapseFilters">
+          <div class="row-fluid">
+            <div class="scroller scrollbar-dynamic" data-height="220px">
+              <h3>With <span class="semi-bold">Scroll</span></h3>
+              <button type="button" class="btn btn-primary btn-cons" ng-click="createTask()"><i class="fa fa-check"></i>&nbsp;Add
+                task
+              </button>
+              <h4><span class="semi-bold">Open Me</span>, Light , <span class="semi-bold">Bold</span> ,
+                <i>Everything</i></h4>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aperiam consequatur, dolore dolorem
+                eos, est exercitationem ipsam iure non nostrum odit perspiciatis praesentium repellat repudiandae sequi
+                sint temporibus voluptates? Nostrum.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="tasks-list" ng-class="{'col-xs-4 tasks-list--expanded' : blockexpanded, 'col-xs-12': !blockexpanded}">
+      <uib-tabset vertical="true" class="tabbable tabs-left">
+        <uib-tab>
+          <uib-tab-heading><i class="fa fa-table fa-lg"></i></uib-tab-heading>
+          <table datatable="ng" dt-options="dtOptions" dt-column-defs="columns"
+                 class="table">
+            <thead>
+            <tr>
+              <th ng-show="!blockexpanded" translate>Project</th>
+              <th translate>Name</th>
+              <th ng-show="!blockexpanded" translate>Created by</th>
+              <th ng-show="!blockexpanded" translate>Assigned to</th>
+              <th ng-show="!blockexpanded" translate>Progress</th>
+              <th ng-show="!blockexpanded" style="min-width: 110px;" translate>Edit</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="task in tasks.data">
+              <td ng-show="!blockexpanded" class="v-align-middle"><a ng-click="showTaskPreview($index)">{{
+                task.project.name }}</a></td>
+              <td class="v-align-middle"><a ng-click="showTaskPreview($index)">{{ task.name }}</a></td>
+              <td ng-show="!blockexpanded" class="v-align-middle">
+                <wm-user user="task.creator">{{ task.creator.name }}</wm-user>
+              </td>
+              <td ng-show="!blockexpanded" class="v-align-middle">
+                <wm-user user="task.assigned">{{ task.assigned.name }}</wm-user>
+              </td>
+              <td ng-show="!blockexpanded" class="v-align-middle">
+                <uib-progressbar type="{{getProgressbarType(task.progress*1)}}" max="100"
+                                 value="task.progress*1"
+                                 animate="true">
+                  {{task.progress*1 }}%
+                </uib-progressbar>
+              </td>
+              <td ng-show="!blockexpanded" class="v-align-middle">
+                <div class="btn-group">
+                  <button class="btn btn-mini btn-white btn-demo-space" ng-click="editTask($index)" translate>Edit
+                  </button>
+                  <button class="btn btn-mini btn-white dropdown-toggle btn-demo-space" data-toggle="dropdown"><span
+                      class="caret"></span></button>
+                  <ul class="dropdown-menu dropdown-menu-left pull-right">
+                    <li><a>Delete</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                    <li><a ng-click="removeTask($index)">Delete</a></li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </uib-tab>
+        <uib-tab>
+          <uib-tab-heading><i class="fa fa-list fa-lg"></i></uib-tab-heading>
+          <div class="col-md-12" ng-repeat="task in tasks.data | limitTo:-1*(currentPage*3) | limitTo:3">
+            <div class="grid simple no-border">
+              <div class="grid-title no-border descriptive">
+                <h4 class="semi-bold">
+                  {{task.name}}
+                  <span class="label"
+                        ng-class="{'label-warning' : 'task.priority==5'}">{{task.priority}}</span>
+                  <span class="label label-danger" ng-class="{'label-warning' : 'task.dd==5'}">{{task.deadline | date : short}}</span>
+                </h4>
+
+                <div class="progress progress-small">
+                  <div data-percentage="0%" style="width: {{task.progress}}%;"
+                       class="progress-bar progress-bar-success" role="progressbar" aria-valuemin="0"
+                       aria-valuemax="100"></div>
+                </div>
+                <p><span class="text-success bold">Ticket #{{task.id}}</span> - Created on <span class="label">{{task.created_at | date}}</span>
+                  by <span class="label"><wm-user user="task.creator">{{task.creator.name}}</wm-user></span> -
+                  Last reply About 1 Month ago by alex&nbsp;&nbsp;<span
+                      class="label label-important">ALERT</span></p>
+
+                <div class="actions">
+                  <a class="view" ng-click="task.open = !task.open"><i class="fa fa-search"></i></a>
+                  <a class="remove" ng-click="editTask($index)"><i class="fa fa-pencil"></i></a>
+                  <a class="remove" ng-click="removeTask(task, $index)"><i class="fa fa-times"></i></a>
+                </div>
+              </div>
+              <div class="grid-body  no-border" ng-show="task.open">
+                <wm-comments task="task" open="{{task.open}}" preload="true"></wm-comments>
+                <br>
+
+                <div class="form-actions">
+                  <div class="post col-md-12">
+                    <div class="user-profile-pic-wrapper">
+                      <div class="user-profile-pic-normal"><img width="35" height="35"
+                                                                ng-src="{{url}}/assets/avatars/original/{{meta.avatar}}"
+                                                                width="69" alt=""></div>
+                    </div>
+                    <div class="info-wrapper">
+                      <form ng-submit="createComment(task, task.commentInput)">
+                        <div class="form-group">
+                          <label class="form-label"><i class="fa fa-reply"></i>&nbsp;Post a
+                            reply</label>
+
+                          <div class="controls">
+                            <input type="text" class="form-control" ng-model="task.commentInput">
+                          </div>
+                        </div>
+                      </form>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <uib-pagination total-items="tasks.data.length" ng-model="currentPage" ng-change="pageChanged()"
+                          items-per-page="3" class="pull-right"></uib-pagination>
+        </uib-tab>
+        <uib-tab active="false" disable="true" ng-click="createTask()">
+          <uib-tab-heading><i class="fa fa-plus fa-lg"></i></uib-tab-heading>
+        </uib-tab>
+      </uib-tabset>
+    </div>
+    <div class="task-details" ng-class="{'col-xs-8' : blockexpanded, 'col-xs-0': !blockexpanded}"
+         ng-controller="TaskPreviewCtrl">
+      <form role="form" novalidate="" ng-submit="save()">
+        <div class="grid simple">
+          <div class="grid-title no-border">
+            <h4><span class="semi-bold">{{task.name}}</span></h4>
+            <div class="tools">
+              <a href="javascript:;" class="remove" ng-click="close()"></a>
+            </div>
+          </div>
+          <div class="grid-body no-border">
+            <div class="row-fluid">
+              <div class="scroller scrollbar-dynamic" data-height="220px">
+                <p>{{task.desc}}</p>
+                <ul class="list-group">
+                  <li class="list-group-item" ng-repeat="item in task.checklist">
+                    <div class="checkbox check-danger">
+                      <div ng-show="item.checked==1" class="pull-right">
+                        <i ng-click="task.checklist.splice($index,1)" class="fa fa-trash"></i>
+                      </div>
+                      <input id="checkbox{{$index}}" type="checkbox" ng-model="item.checked"
+                             ng-checked="item.checked==1">
+                      <label for="checkbox{{$index}}">{{item.body}}</label>
+                    </div>
+                  </li>
+                </ul>
+                <wm-editlist ng-model="task.checklist"></wm-editlist>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

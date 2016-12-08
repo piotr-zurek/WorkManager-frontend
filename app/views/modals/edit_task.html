@@ -1,0 +1,137 @@
+<div class="modal-header">
+  <button type="button" class="close" ng-click="cancel()" aria-hidden="true">×</button>
+  <br>
+  <i class="fa fa-pencil fa-7x"></i>
+  <h4 class="semi-bold">{{'Edit Task' | translate}}: {{task.name}}</h4>
+  <p class="no-margin">{{task.desc}} </p>
+  <br>
+</div>
+<div class="modal-body clearfix">
+  <form role="form" novalidate="" ng-submit="save()">
+    <uib-tabset justified="true">
+      <uib-tab heading="Basic Information">
+        <h4 class="semi-bold">Step 1 - <span class="light">Informations</span></h4>
+
+        <div class="form-group">
+          <label for="Name" class="control-label" translate>Name</label>
+
+          <div class="control">
+            <input type="text" class="form-control" id="Name" placeholder="Name" ng-model="task.name"
+                   required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="desc" class="control-label" translate>Description</label>
+          <div class="control">
+            <textarea class="form-control" id="desc" placeholder="Description" ng-model="task.desc" required></textarea>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="project" class="control-label" translate>Project</label>
+          <div class="control">
+            <select name="name" class="form-control" id="project"
+                    ng-options="project as project.name for project in projects track by project.id"
+                    ng-model="temp.project" ng-change="changeProject()"></select>
+          </div>
+        </div>
+      </uib-tab>
+      <uib-tab heading="Persons">
+        <h4 class="semi-bold">Step 2 - <span class="light">Persons</span></h4>
+        <div class="form-group">
+          <label for="observer" class="control-label" translate>Observer</label>
+          <div class="control">
+            <select name="name" class="form-control" id="observer"
+                    ng-options="user as user.name for user in users.data track by user.id"
+                    ng-model="temp.observer" ng-change="changeObserver()">
+              <option value="" translate>-NONE-</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="assigned" class="control-label" translate>Assigned to</label>
+
+          <div class="control">
+            <select name="name" class="form-control" id="assigned"
+                    ng-options="assigned as assigned.name for assigned in users.data track by assigned.id"
+                    ng-model="temp.assigned_to" ng-change="changeAssigned()">
+              <option value="" translate>-NONE-</option>
+            </select>
+          </div>
+        </div>
+      </uib-tab>
+      <uib-tab heading="Details">
+        <h4 class="semi-bold">Step 3 - <span class="light">Details</span></h4>
+        <div class="form-group">
+          <label for="priority" class="control-label" translate>Priority</label>
+          <div class="control">
+            <select name="name" class="form-control" id="priority"
+                    ng-options="priority.id*1 as priority.name for priority in priorities"
+                    ng-model="task.priority">
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="state" class="control-label" translate>State</label>
+          <div class="control">
+            <select name="name" class="form-control" id="state"
+                    ng-options="state.id*1 as state.name for state in states"
+                    ng-model="task.state">
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="type" class="control-label" translate>Type</label>
+          <div class="control">
+            <select name="name" class="form-control" id="type"
+                    ng-options="type.id*1 as type.name for type in types"
+                    ng-model="task.type">
+            </select>
+          </div>
+        </div>
+      </uib-tab>
+      <uib-tab heading="Timing">
+        <h4 class="semi-bold">Step 4 - <span class="light">Details</span></h4>
+        <div class="form-group">
+          <label for="deadline" class="control-label">Deadline</label>
+          <div class="control">
+            <input type="text" class="form-control" id="deadline" placeholder="Deadline" ng-model="temp.deadline">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="progress" class="control-label" translate>Progress</label>
+          <div class="control">
+            <rzslider id="progress" rz-slider-model="task.progress"
+                      rz-slider-options="progressSliderOptions"></rzslider>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="duration" class="control-label" translate>Duration (in min)</label>
+
+          <div class="control">
+            <input type="text" class="form-control" id="duration" placeholder="Duration"
+                   ng-model="task.duration">
+          </div>
+        </div>
+      </uib-tab>
+      <uib-tab heading="Sub-tasks">
+        <h4 class="semi-bold">Step 5 - <span class="light">Sub-tasks</span></h4>
+        <ul class="list-group">
+          <li class="list-group-item" ng-repeat="item in task.checklist">
+            <div class="checkbox check-danger">
+              <div ng-show="item.checked==1" class="pull-right">
+                <i ng-click="task.checklist.splice($index,1)" class="fa fa-trash"></i>
+              </div>
+              <input id="checkbox{{$index}}" type="checkbox" ng-model="item.checked" ng-checked="item.checked==1">
+              <label for="checkbox{{$index}}">{{item.body}}</label>
+            </div>
+          </li>
+        </ul>
+        <wm-editlist ng-model="task.checklist"></wm-editlist>
+      </uib-tab>
+    </uib-tabset>
+  </form>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-default" ng-click="cancel()" translate>Cancel</button>
+  <button class="btn btn-primary" ng-click="save()" translate>Save</button>
+</div>

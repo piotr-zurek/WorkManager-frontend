@@ -1,0 +1,21 @@
+<div class="post" ng-repeat="comment in comments">
+  <div class="user-profile-pic-wrapper">
+    <div class="user-profile-pic-normal"><img width="35" height="35"
+                                              ng-src="{{url}}/assets/avatars/original/{{comment.user.metadata.avatar}}"
+                                              alt="{{comment.user.name}}"
+                                              title="{{comment.user.name}}">
+    </div>
+  </div>
+  <div class="info-wrapper">
+    <div class="info">
+      <h5>
+        <wm-user user="comment.user">{{comment.user.name}}</wm-user>
+      </h5>
+      {{comment.body}}
+      <hr>
+      <p class="small-text">Posted on {{comment.created_at | date}} at {{comment.created_at | date}}</p>
+    </div>
+    <div class="clearfix"></div>
+  </div>
+  <div class="clearfix"></div>
+</div>
